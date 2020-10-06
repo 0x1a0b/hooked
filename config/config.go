@@ -44,5 +44,4 @@ type Config struct {
 
 type DiscordConfig struct {
 	Url string `yaml:"url"`
-	Secret string `yaml:"secret"`
 }
