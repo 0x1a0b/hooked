@@ -24,6 +24,7 @@
 # secrets
 *.secret.yml
 *.secret.txt
+config.yml
 
 # other stuff
 tmp/
