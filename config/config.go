@@ -40,8 +40,13 @@ func GetConf() *Config {
 
 type Config struct {
 	Discord DiscordConfig `yaml:"discord"`
+	Steam SteamConfig `yaml:"steam"`
 }
 
 type DiscordConfig struct {
 	Url string `yaml:"url"`
+}
+
+type SteamConfig struct {
+	ApiKey string `yaml:"apikey"`
 }
