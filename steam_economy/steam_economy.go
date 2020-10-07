@@ -24,18 +24,19 @@ var (
 )
 
 func UpdateShop() () {
+	log.Errorf("hello")
 	newEconState, _ := GetEconomyResponse()
 	newWebShopState := GetShopState()
 	_, equal := messagediff.PrettyDiff(newWebShopState, currWebShopstate)
 	if currEconState.Result.Success != true {
-		log.Debugf("success is false, either there is a problem or a restart.. anyways...")
+		log.Errorf("success is false, either there is a problem or a restart.. anyways...")
 		currWebShopstate = newWebShopState
 		currEconState = newEconState
 		sendUpdate()
 	} else if equal == true {
-		log.Debugf("no change in steam econ")
+		log.Errorf("no change in steam econ")
 	} else {
-		log.Debugf("change in econ, updating")
+		log.Errorf("change in econ, updating")
 		currWebShopstate = newWebShopState
 		currEconState = newEconState
 		sendUpdate()
@@ -73,8 +74,16 @@ func sendUpdate() () {
 			},
 			}
 
-		o, _ := json.Marshal(object)
-		http.Post(config.GetConf().Discord.Url, "application/json", bytes.NewBuffer(o))
+		o, marshalErr := json.Marshal(object)
+		if marshalErr != nil {
+			log.Errorf("json marshal error: %v", marshalErr)
+		}
+		res, err := http.Post(config.GetConf().Discord.Url, "application/json", bytes.NewBuffer(o))
+		if err != nil {
+			log.Errorf("error %v", err)
+		}
+		defer res.Body.Close()
+		log.Errorf("%v", res.Body)
 		}
 	return
 	}
@@ -138,7 +147,7 @@ func GetEconomyResponse() (result SteamApiResponse, err error) {
 		SetResult(&result).
 		Get(SteamApiEconomyBase)
 	if err == nil {
-		log.Debugf("no resty error, got status code %v from client", resp.StatusCode())
+		log.Errorf("no resty error, got status code %v from client", resp.StatusCode())
 	} else {
 		log.Errorf("got resty error: %v", err)
 	}

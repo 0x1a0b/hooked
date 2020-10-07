@@ -59,8 +59,9 @@ var (
 func main() {
 	// https://godoc.org/github.com/robfig/cron
 	c := cron.New()
-	c.AddFunc("@every 3m", func() { go update() })
-	c.AddFunc("@every 3m", func() { go steam_economy.UpdateShop() })
+	c.AddFunc("@every 5m", func() { go update() })
+	c.AddFunc("@every 1m", func() { go steam_economy.UpdateShop() })
+	log.Debugf("starting cron in foreground")
 	c.Run()
 }
 
