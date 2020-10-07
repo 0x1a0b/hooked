@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/0x1a0b/hooked/config"
+	"github.com/0x1a0b/hooked/steam_economy"
 	"github.com/kz/discordrus"
 	"github.com/mmcdole/gofeed"
 	"github.com/robfig/cron/v3"
@@ -59,6 +60,7 @@ func main() {
 	// https://godoc.org/github.com/robfig/cron
 	c := cron.New()
 	c.AddFunc("@every 3m", func() { go update() })
+	c.AddFunc("@every 3m", func() { go steam_economy.UpdateShop() })
 	c.Run()
 }
 
