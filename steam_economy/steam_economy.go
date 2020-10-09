@@ -24,6 +24,7 @@ var (
 )
 
 func UpdateShop() () {
+	log.SetReportCaller(true)
 	log.Errorf("hello")
 	newEconState, _ := GetEconomyResponse()
 	newWebShopState := GetShopState()
@@ -53,28 +54,25 @@ func sendUpdate() () {
 				thisWebShopItem = wsItem
 			}
 		}
-		object := map[string]interface{}{
-			"title": "New Skip: "+thisWebShopItem.Name,
-			"url":  thisWebShopItem.Link,
-			"color": 2724948,
-			"fields": []interface{}{
-				map[string]interface{}{
-					"name": "Price Euro",
-					"value": item.Prices["EUR"],
-					"inline": true,
-				},
-				map[string]interface{}{
-					"name": "Price CHF",
-					"value": item.Prices["CHF"],
-					"inline": true,
-				},
-			},
-			"thumbnail": map[string]interface{}{
-				"url": thisWebShopItem.Picture,
-			},
-			}
 
-		o, marshalErr := json.Marshal(object)
+		text := `{
+			"title": "New Skin: ` + thisWebShopItem.Name + `",
+			"color": 2724948,
+            "url": "` + thisWebShopItem.Link + `",
+            "fields": [
+              {
+                "name": "Price CHF",
+                "value": "` + string(item.Prices["CHF"]) + `",
+                "inline": true
+              },
+            ]
+            "thumbnail": {
+              "url": "`+thisWebShopItem.Picture+`"
+            },
+        }`
+		textBytes := []byte(text)
+
+		o, marshalErr := json.Marshal(textBytes)
 		if marshalErr != nil {
 			log.Errorf("json marshal error: %v", marshalErr)
 		}
@@ -83,7 +81,7 @@ func sendUpdate() () {
 			log.Errorf("error %v", err)
 		}
 		defer res.Body.Close()
-		log.Errorf("%v", res.Body)
+		log.Errorf("%v", )
 		}
 	return
 	}
