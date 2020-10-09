@@ -8,6 +8,7 @@ import (
 	"github.com/go-resty/resty/v2"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/d4l3k/messagediff.v1"
+	"io/ioutil"
 	"net/http"
 	"regexp"
 )
@@ -81,7 +82,14 @@ func sendUpdate() () {
 			log.Errorf("error %v", err)
 		}
 		defer res.Body.Close()
-		log.Errorf("%v", )
+		if res.StatusCode != 200 {
+			log.Errorf("status code %v", res.StatusCode)
+				body, err := ioutil.ReadAll(res.Body)
+			if err != nil {
+				log.Errorf("got err %v ", err)
+			}
+			log.Errorf("message %v", string(body))
+		}
 		}
 	return
 	}
