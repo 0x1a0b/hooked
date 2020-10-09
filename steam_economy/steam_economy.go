@@ -2,7 +2,6 @@ package steam_economy
 
 import (
 	"bytes"
-	"encoding/json"
 	"github.com/0x1a0b/hooked/config"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/go-resty/resty/v2"
@@ -11,6 +10,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"regexp"
+	"strconv"
+	"time"
 )
 
 const (
@@ -48,6 +49,7 @@ func UpdateShop() () {
 
 func sendUpdate() () {
 	for _, item := range currEconState.Result.Assets {
+		time.Sleep(1*time.Second)
 		id := item.Name
 		var thisWebShopItem WebShopItem
 		for _, wsItem := range currWebShopstate.Items {
@@ -57,30 +59,26 @@ func sendUpdate() () {
 		}
 
 		text := `{
-          "content": "get the wallet ready!!"
-          "embed": {
+          "embeds": [ {
 			"title": "New Skin: ` + thisWebShopItem.Name + `",
-			"color": 2724948,
+			"color": 5558617,
             "url": "` + thisWebShopItem.Link + `",
             "fields": [
               {
                 "name": "Price CHF",
-                "value": "` + string(item.Prices["CHF"]) + `",
+                "value": "` + strconv.Itoa(item.Prices["CHF"]) + `",
                 "inline": true
               }
             ],
             "thumbnail": {
               "url": "`+thisWebShopItem.Picture+`"
             }
-          }
+          } ]
         }`
 		textBytes := []byte(text)
+		log.Errorf("json: %", text)
 
-		o, marshalErr := json.Marshal(textBytes)
-		if marshalErr != nil {
-			log.Errorf("json marshal error: %v", marshalErr)
-		}
-		res, err := http.Post(config.GetConf().Discord.Url, "application/json", bytes.NewBuffer(o))
+		res, err := http.Post(config.GetConf().Discord.Url, "application/json", bytes.NewBuffer(textBytes))
 		if err != nil {
 			log.Errorf("error %v", err)
 		}
