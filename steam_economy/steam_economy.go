@@ -57,6 +57,8 @@ func sendUpdate() () {
 		}
 
 		text := `{
+          "content": "get the wallet ready!!"
+          "embed": {
 			"title": "New Skin: ` + thisWebShopItem.Name + `",
 			"color": 2724948,
             "url": "` + thisWebShopItem.Link + `",
@@ -65,11 +67,12 @@ func sendUpdate() () {
                 "name": "Price CHF",
                 "value": "` + string(item.Prices["CHF"]) + `",
                 "inline": true
-              },
-            ]
+              }
+            ],
             "thumbnail": {
               "url": "`+thisWebShopItem.Picture+`"
-            },
+            }
+          }
         }`
 		textBytes := []byte(text)
 
