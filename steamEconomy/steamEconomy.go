@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"regexp"
 	"strconv"
+	"time"
 )
 
 const (
@@ -71,6 +72,7 @@ func (i *Instance) FireAll() () {
 		for _, wsItem := range i.currWebShopstate.Items {
 			if wsItem.Id == item.Name {
 				i.FireOne(item, wsItem)
+				time.Sleep(2*time.Second)
 			}
 		}
 	}

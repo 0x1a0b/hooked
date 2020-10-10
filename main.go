@@ -13,10 +13,9 @@ import (
 
 func init() {
 
+	config.Read()
 	log.SetLevel(config.GetLogLevel())
 	log.SetReportCaller(true)
-
-	config.Read()
 
 	exampleSimple = exampleCheckSimple.Setup()
 	exampleEmbeds = exampleCheckEmbeds.Setup()
