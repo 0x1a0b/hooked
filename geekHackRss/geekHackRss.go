@@ -50,6 +50,7 @@ func (i *Instance) Run() () {
 	if i.LastItem == "" {
 		i.LastItem = feed.Items[0].Link
 		i.logger.Debugf("Resuming with empty HEAD, setting %v", i.LastItem)
+		i.Fire(feed.Items[0])
 		return
 	} else if i.LastItem == feed.Items[0].Link {
 		i.logger.Debugf("same HEAD, doing nothing")
