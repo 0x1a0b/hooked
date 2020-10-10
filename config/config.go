@@ -49,13 +49,8 @@ func GetLogLevel() (level log.Level) {
 
 type Config struct {
 	Loglevel string `yaml:"loglevel"`
-	Discord DiscordConfig `yaml:"discord"`
 	Steam SteamConfig `yaml:"steam"`
 	Hooks HookSecrets `yaml:"hooks"`
-}
-
-type DiscordConfig struct {
-	Url string `yaml:"url"`
 }
 
 type SteamConfig struct {
