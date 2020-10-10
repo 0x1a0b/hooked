@@ -63,5 +63,8 @@ type SteamConfig struct {
 }
 
 type HookSecrets struct {
-	ExampleSender string `yaml:"exampleSender"`
+	ExampleSenderSimple string `yaml:"exampleSenderSimple"`
+	ExampleSenderEmbeds string `yaml:"exampleSenderEmbeds"`
+	RustNewItems string `yaml:"rustNewItems"`
+	GeekHackNews string `yaml:"geekHackNews"`
 }

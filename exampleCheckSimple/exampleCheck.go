@@ -1,4 +1,4 @@
-package exampleCheck
+package exampleCheckSimple
 
 import (
 	"github.com/0x1a0b/hooked/config"

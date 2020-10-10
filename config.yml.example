@@ -4,4 +4,7 @@ discord:
 steam:
   apikey: xxx
 hooks:
-  exampleSender: https://sdafdsafsdf.xxxxxx/dsafd
+  exampleSenderSimple: https://sdafdsafsdf.xxxxxx/dsafd
+  exampleSenderEmbeds:
+  rustNewItems:
+  geekHackNews:

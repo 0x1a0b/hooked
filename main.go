@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/0x1a0b/hooked/config"
-	"github.com/0x1a0b/hooked/exampleCheck"
+	"github.com/0x1a0b/hooked/exampleCheckSimple"
 	"github.com/0x1a0b/hooked/geekhack_rss"
 	"github.com/0x1a0b/hooked/steam_economy"
 	"github.com/robfig/cron/v3"
@@ -14,13 +14,13 @@ func init() {
 	log.SetLevel(log.DebugLevel)
 	log.SetReportCaller(true)
 	config.Read()
-	example = exampleCheck.Setup()
+	example = exampleCheckSimple.Setup()
 	time.Sleep(1 * time.Second)
 	log.Debugf("initialized")
 }
 
 var (
-	example *exampleCheck.Instance
+	example *exampleCheckSimple.Instance
 )
 
 func main() {
