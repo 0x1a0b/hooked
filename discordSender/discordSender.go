@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"errors"
+	"github.com/0x1a0b/hooked/config"
 	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
@@ -14,12 +15,15 @@ import (
 
 func New(secret string) (s *Sender) {
 
-	s.webhookSecret = secret
+	s = &Sender{
+		webhookSecret: secret,
+	}
 
 	tr := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
 	s.client = &http.Client{Timeout: time.Second * 20, Transport: tr}
 
     s.logger = logrus.New()
+    s.logger.SetLevel(config.GetLogLevel())
 
 	return
 }

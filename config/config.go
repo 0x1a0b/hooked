@@ -38,9 +38,20 @@ func GetConf() *Config {
 	return Conf
 }
 
+func GetLogLevel() (level log.Level) {
+	var err error
+	level, err = log.ParseLevel(Conf.Loglevel)
+	if err != nil {
+		level = log.ErrorLevel
+	}
+	return
+}
+
 type Config struct {
+	Loglevel string `yaml:"loglevel"`
 	Discord DiscordConfig `yaml:"discord"`
 	Steam SteamConfig `yaml:"steam"`
+	Hooks HookSecrets `yaml:"hooks"`
 }
 
 type DiscordConfig struct {
@@ -49,4 +60,8 @@ type DiscordConfig struct {
 
 type SteamConfig struct {
 	ApiKey string `yaml:"apikey"`
+}
+
+type HookSecrets struct {
+	ExampleSender string `yaml:"exampleSender"`
 }
