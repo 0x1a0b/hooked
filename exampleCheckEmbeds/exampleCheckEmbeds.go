@@ -16,7 +16,7 @@ func Setup() (i *Instance) {
 
 	i = &Instance{}
     i.Message = InitialMessage
-    secret := config.GetConf().Hooks.ExampleSender
+    secret := config.GetConf().Hooks.ExampleSenderEmbeds
     i.sender = discordSender.New(secret)
 
     log.Debugf("setup ended")
