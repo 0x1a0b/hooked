@@ -1,0 +1,24 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: hooked
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'hooked:latest'
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: 'https://github.com/0x1a0b/hooked.git'
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'golang:1.11.5'
+        namespace: openshift
+    type: Source
