@@ -44,12 +44,13 @@ func (i *Instance) Run() () {
 	feed, err := i.parser.ParseURL(GeekHackUrl)
 	if err != nil {
 		i.logger.Errorf("error parsing rss: %v", err)
+		i.LastItem = ""
 		return
 	}
 
 	if i.LastItem == "" {
 		i.LastItem = feed.Items[0].Link
-		i.logger.Debugf("Resuming with empty HEAD, setting %v", i.LastItem)
+		i.logger.Debugf("Resuming with empty HEAD or after error, setting %v", i.LastItem)
 		i.Fire(feed.Items[0])
 		return
 	} else if i.LastItem == feed.Items[0].Link {
