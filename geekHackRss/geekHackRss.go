@@ -61,7 +61,7 @@ func (i *Instance) Run() () {
 		i.logger.Debugf("HEAD and LastItem are different. HEAD is %v while the last item seen was %v", feed.Items[0].Link, i.LastItem)
 		for index, item := range feed.Items {
 			if item.Link == i.LastItem {
-				i.LastItem = item.Link
+				i.LastItem = feed.Items[0].Link
 				i.logger.Debugf("delta ended with %v at %v", item.Link, index)
 				break
 			} else {
