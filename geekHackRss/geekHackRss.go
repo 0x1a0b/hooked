@@ -39,16 +39,18 @@ func Setup() (i *Instance) {
 }
 
 func (i *Instance) Run() () {
-	i.logger.Debugf("starting run")
+	i.logger.Debugf("starting run, lastitem is %v", i.LastItem)
 
 	feed, err := i.parser.ParseURL(GeekHackUrl)
 	if err != nil {
 		i.logger.Errorf("error parsing rss: %v", err)
 		i.LastItem = ""
+		i.logger.Errorf("resetting Lastitem, now - %v - ", i.LastItem)
 		return
 	}
 
 	if i.LastItem == "" {
+		i.logger.Debugf("LastItem Empty")
 		i.LastItem = feed.Items[0].Link
 		i.logger.Debugf("Resuming with empty HEAD or after error, setting %v", i.LastItem)
 		i.Fire(feed.Items[0])
@@ -56,15 +58,18 @@ func (i *Instance) Run() () {
 	} else if i.LastItem == feed.Items[0].Link {
 		i.logger.Debugf("same HEAD, doing nothing")
 	} else {
+		i.logger.Debugf("HEAD and LastItem are different. HEAD is %v while the last item seen was %v", feed.Items[0].Link, i.LastItem)
 		for index, item := range feed.Items {
 			if item.Link == i.LastItem {
 				i.LastItem = item.Link
 				i.logger.Debugf("delta ended with %v at %v", item.Link, index)
 				break
 			} else {
+				i.logger.Debugf("firing hook for %v", item.Link)
 				i.Fire(item)
 			}
 		}
+		i.logger.Debugf("new lastitem is %v", i.LastItem)
 	}
 
 	i.logger.Debugf("ending run")

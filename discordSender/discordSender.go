@@ -36,6 +36,8 @@ type Sender struct {
 
 func (s *Sender) Send(h Hook) (err error) {
 
+	s.logger.Debugf("Start sending hook")
+
 	if s.webhookSecret == "" {
 		s.logger.Errorf("webhook secret is not configured")
 		return errors.New("webhook secret is not configured")
@@ -70,6 +72,8 @@ func (s *Sender) Send(h Hook) (err error) {
 		}
 		return errors.New(text)
 	}
+
+	s.logger.Debugf("Ended sending hook")
 
 	return
 }
